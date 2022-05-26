@@ -7,6 +7,8 @@ import { Navbar,Container } from 'react-bootstrap';
 
 const Bar = () => {
     const isAuth = localStorage.getItem('isAuth');  
+    const uId = localStorage.getItem('userId');
+    const userLink = `/Users/${uId}`;
   return (
     <Navbar bg="light" variant='light' sticky='top'>
   <Container >
@@ -18,6 +20,7 @@ const Bar = () => {
     <Button variant='light'> Student Union</Button>
     <Button variant='light'>About Us</Button> 
    { !isAuth && <Nav.Link href='/Login' >Login</Nav.Link> } 
+   { isAuth && <Nav.Link  href={userLink}>My Account</Nav.Link> }
 
     
   </Container>

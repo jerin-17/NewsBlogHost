@@ -17,7 +17,10 @@ const Login = ({setIsAuth}) => {
     signInWithPopup(auth, provider).then((result)=>{
       localStorage.setItem("isAuth", true);
       setIsAuth(true);
-      navigate('/Users');
+      navigate(`/Users/${result.user.uid}`);
+      localStorage.setItem("userId",`${result.user.uid} `);
+      console.log(result.user.phoneNumber)
+      console.log(result.user.uid);
 
     }
     )  } 

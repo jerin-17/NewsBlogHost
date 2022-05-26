@@ -4,8 +4,11 @@
 @import "../node_modules/bootstrap/scss/mixins";
 @import "../node_modules/bootstrap/scss/root";
 
-
+html,body{
+    height:100%;
+}
 
 .Banner{
     height: 20%;
 }
+

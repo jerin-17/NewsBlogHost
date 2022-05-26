@@ -6,6 +6,7 @@ import  News  from "./pages/News";
 import PageNotFound from "./pages/PageNotFound";
 import Users from "./pages/Users";
 import {useState} from 'react';
+import Create from "./pages/Create";
 
 
 function App() {
@@ -18,7 +19,8 @@ function App() {
       <Route  path="/" element={<Home/>} />
       <Route  path="News" element={<News/>} />
       <Route  path="Login" element={<Login setIsAuth={setIsAuth} />} />
-      <Route path="Users" element={<Users/>} />
+      <Route path="Users/:id" element={<Users/>} />
+      <Route path="Create/:id" element={<Create/>} />
       <Route path="*" element={<PageNotFound/>} />
        
     </Routes>
