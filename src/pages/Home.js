@@ -23,7 +23,7 @@ function Home() {
 
   useEffect( () => {
     getPosts();
-  })
+  },[]);
   return (
     <div>
       <div className='d-flex justify-content-center mh-100' style={{height: 180}}>
@@ -34,7 +34,7 @@ function Home() {
       <div className='cards'>
         
         {postLists.map((post)=> {
-          return  <div key={post.id} >{post.title}<br/>{post.desc}</div>
+          return  <div key={post.id} >{post.title}<br/>{post.imageUrl}<br/>{post.desc}</div>
         })
       }
       </div>
