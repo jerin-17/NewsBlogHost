@@ -1,9 +1,14 @@
-import React from 'react'
+import React from "react";
 
-const Card = () => {
+// eslint-disable-next-line no-unused-vars
+const Card = ({ title, image, desc }) => {
   return (
-    <div>Card</div>
-  )
-}
+    <div>
+      <h1>{title}</h1>
+      <h3>{image}</h3>
+      <p>{desc}</p>
+    </div>
+  );
+};
 
-export default Card
+export default Card;
