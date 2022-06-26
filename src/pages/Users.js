@@ -4,24 +4,29 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Image } from "react-bootstrap";
 import banner from "../Assets/banner.png";
+import { useUserAuth } from "../components/Context";
 //import {useParams} from 'react-router-dom';
 const Users = () => {
   // eslint-disable-next-line no-unused-vars
   const { id } = useParams();
   let navigate = useNavigate();
-  let uId = localStorage.getItem("userId");
+  // let uId = localStorage.getItem("userId");
+  const { user, logOut } = useUserAuth();
 
-  const logOut = () => {
-    localStorage.clear();
-    navigate("/");
+  const handleLogOut = async () => {
+    try {
+      await logOut();
+      navigate("/");
+    } catch (err) {
+      console.log(err.message);
+    }
   };
-
   const goToHome = () => {
     navigate("/");
   };
 
   const goToCreate = () => {
-    navigate(`/Create/${uId}`);
+    navigate(`/Create/${user.uid}`);
   };
 
   return (
@@ -39,7 +44,7 @@ const Users = () => {
           variant="danger"
           type="button"
           style={{ float: "right" }}
-          onClick={logOut}
+          onClick={handleLogOut}
         >
           Log out
         </Button>
@@ -58,8 +63,7 @@ const Users = () => {
       </div>
 
       <Button type="button" onClick={goToCreate}>
-        {" "}
-        Create{" "}
+        Create
       </Button>
     </div>
   );

@@ -1,33 +1,27 @@
-import React, { useEffect, useState } from "react";
-import Card from "./Card";
-import { getDocs, collection } from "firebase/firestore";
-import { db } from "../firebaseConfig";
+import React from "react";
+import CCard from "./CCard";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import { useDbContext } from "./DbContext";
 
 const CardPack = () => {
-  const [postLists, setPostList] = useState([]);
-  const postCollectionRef = collection(db, "posts");
-
-  const getPosts = async () => {
-    const data = await getDocs(postCollectionRef);
-    setPostList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-  };
-
-  useEffect(() => {
-    getPosts();
-  }, []);
+  const { postLists } = useDbContext();
   return (
     <>
-      {postLists.map((post) => {
-        return (
-          <Card
-            key={post.id}
-            id={post.id}
-            title={post.title}
-            image={post.imageUrl}
-            desc={post.desc}
-          />
-        );
-      })}
+      <Row xs={1} md={4} className="g-4 m-4 ">
+        {postLists.map((post) => {
+          return (
+            <Col key={post.id}>
+              <CCard
+                id={post.id}
+                title={post.title}
+                image={post.imageUrl}
+                desc={post.desc}
+              />
+            </Col>
+          );
+        })}
+      </Row>
     </>
   );
 };

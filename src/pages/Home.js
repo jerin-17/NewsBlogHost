@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import banner from "../Assets/banner.png";
 import Bar from "../components/Bar";
 import CardPack from "../components/CardPack";
 import Image from "react-bootstrap/Image";
-
+import { useDbContext } from "../components/DbContext";
 function Home() {
+  const { getPosts } = useDbContext();
+  useEffect(() => {
+    getPosts();
+  }, []);
   return (
     <div>
       <div

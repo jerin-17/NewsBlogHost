@@ -7,6 +7,7 @@ import { addDoc, collection, setDoc } from "firebase/firestore";
 import { auth, db, storage } from "../firebaseConfig";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
+import { useUserAuth } from "../components/Context";
 
 const Create = () => {
   const [title, setTitle] = useState("");
@@ -15,9 +16,9 @@ const Create = () => {
   const [imageUrl, setImageUrl] = useState("");
   const [isFirstMount, setIsFirstMount] = useState(true);
   const navigate = useNavigate();
-
+  const { user } = useUserAuth();
   const goBack = () => {
-    navigate(`/Users/${localStorage.getItem("userId")}`);
+    navigate(`/Users/${user.uid}}`);
   };
 
   const removeImage = () => {
@@ -59,7 +60,7 @@ const Create = () => {
       title,
       imageUrl: imageUrl,
       desc,
-      author: { name: auth.currentUser.displayName, id: auth.currentUser.uid },
+      author: user.uid,
     });
 
     navigate("/");

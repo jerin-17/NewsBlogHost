@@ -9,27 +9,30 @@ import { useState } from "react";
 import Create from "./pages/Create";
 import { UserAuthContextProvider } from "./components/Context";
 import ProtectedRoutes from "./components/ProtectedRoutes";
+import { DbContextProvider } from "./components/DbContext";
 function App() {
   // eslint-disable-next-line no-unused-vars
   const [isAuth, setIsAuth] = useState(false);
 
   return (
     <UserAuthContextProvider>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="News" element={<News />} />
-        <Route path="Login" element={<Login setIsAuth={setIsAuth} />} />
-        <Route
-          path="Users/:id"
-          element={
-            <ProtectedRoutes>
-              <Users />
-            </ProtectedRoutes>
-          }
-        />
-        <Route path="Create/:id" element={<Create />} />
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
+      <DbContextProvider>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="News/:id" element={<News />} />
+          <Route path="Login" element={<Login setIsAuth={setIsAuth} />} />
+          <Route
+            path="Users/:id"
+            element={
+              <ProtectedRoutes>
+                <Users />
+              </ProtectedRoutes>
+            }
+          />
+          <Route path="Create/:id" element={<Create />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </DbContextProvider>
     </UserAuthContextProvider>
   );
 }

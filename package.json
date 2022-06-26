@@ -61,6 +61,7 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "parcel-bundler": "^1.12.5"
   },
   "main": "index.js",
@@ -73,6 +74,5 @@
   "bugs": {
     "url": "https://github.com/jerin-17/NewsBlog/issues"
   },
- 
   "description": ""
 }

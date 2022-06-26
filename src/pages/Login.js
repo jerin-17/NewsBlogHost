@@ -1,68 +1,61 @@
-import { Button, Nav } from "react-bootstrap";
-import React from "react";
-import { Col, Container, Row } from "react-bootstrap";
-import google from "../Assets/google.png";
-import { Image } from "react-bootstrap";
-import { provider, auth } from "../firebaseConfig";
-import { signInWithPopup } from "firebase/auth";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Form, Alert } from "react-bootstrap";
+import { Button } from "react-bootstrap";
+import { useUserAuth } from "../components/Context";
 
-const Login = ({ setIsAuth }) => {
-  let navigate = useNavigate();
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  // eslint-disable-next-line no-unused-vars
+  const { user, logIn } = useUserAuth();
+  const navigate = useNavigate();
 
-  const signInWithGoogle = () => {
-    // eslint-disable-next-line no-unused-vars
-    signInWithPopup(auth, provider).then((result) => {
-      localStorage.setItem("isAuth", true);
-      setIsAuth(true);
-      navigate(`/Users/${result.user.uid}`);
-      localStorage.setItem("userId", `${result.user.uid} `);
-      console.log(result.user.phoneNumber);
-      console.log(result.user.uid);
-    });
-  };
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setError("");
+    try {
+      const res = await logIn(email, password);
+      const uid = res.user.uid;
+      localStorage.setItem("uid", uid);
+      navigate(`/Users/${uid}`);
+    } catch (err) {
+      setError(err.message);
+    }
+  }
+
   return (
-    <Container className="mt-5 shadow shadow-5 ">
-      <Row>
-        <Col className="d-flex justify-content-center align-items-center">
-          <h1 className="mt-3 p-2"> Login to Continue </h1>
-        </Col>
-      </Row>
-      <Row>
-        <Col className="d-flex justify-content-center mt-1 p-2">
-          <small style={{ color: "blue" }}>Login with Google</small>
-        </Col>
-      </Row>
-      <Row>
-        <Col className="d-flex justify-content-center mt-2 p-5">
-          <Image src={google} alt="Google Icon" style={{ height: "100px" }} />
-        </Col>
-      </Row>
+    <>
+      <div className="p-4 box">
+        <h2 className="mb-3">Firebase Auth Login</h2>
+        {error && <Alert variant="danger">{error}</Alert>}
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Control
+              type="email"
+              placeholder="Email address"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </Form.Group>
 
-      <Row>
-        <Col className="d-grid gap-2 mt-4 pt-3">
-          <Button
-            className="w-50 m-auto"
-            variant="primary"
-            size="lg"
-            type="button"
-            name="login"
-            onClick={signInWithGoogle}
-          >
-            {" "}
-            Login{" "}
-          </Button>
-        </Col>
-      </Row>
-      <Row>
-        <Col className="d-flex justify-content-center m-2 pb-2">
-          <small>
-            {" "}
-            <Nav.Link href="/"> Return to Home</Nav.Link>{" "}
-          </small>
-        </Col>
-      </Row>
-    </Container>
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </Form.Group>
+
+          <div className="d-grid gap-2">
+            <Button variant="primary" type="Submit">
+              Log In
+            </Button>
+          </div>
+        </Form>
+        <hr />
+      </div>
+    </>
   );
 };
 
