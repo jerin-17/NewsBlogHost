@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import { addDoc, collection, setDoc } from "firebase/firestore";
-import { auth, db, storage } from "../firebaseConfig";
+import { db, storage } from "../firebaseConfig";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
 import { useUserAuth } from "../components/Context";

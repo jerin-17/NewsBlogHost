@@ -19,7 +19,7 @@ function App() {
       <DbContextProvider>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="News/:id" element={<News />} />
+          <Route path="News/:docid" element={<News />} />
           <Route path="Login" element={<Login setIsAuth={setIsAuth} />} />
           <Route
             path="Users/:id"
