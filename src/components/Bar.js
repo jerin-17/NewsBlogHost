@@ -3,13 +3,25 @@ import React from "react";
 import { Navbar, Container } from "react-bootstrap";
 import { useUserAuth } from "./Context";
 
-const Bar = () => {
+const Bar = ({ handleClick, filter }) => {
   const { user } = useUserAuth();
   return (
     <Navbar bg="light" variant="light" sticky="top">
       <Container>
-        <Button variant="light"> Home </Button>
-        <Button variant="light"> College </Button>
+        <Button
+          variant={filter === "home" ? "primary" : "light"}
+          onClick={() => handleClick("home")}
+        >
+          Home
+        </Button>
+        <Button
+          variant={
+            filter === "tUy3IedmJfYQnCBjQNLC60yWDl53" ? "primary" : "light"
+          }
+          onClick={() => handleClick("tUy3IedmJfYQnCBjQNLC60yWDl53")}
+        >
+          College
+        </Button>
         <Button variant="light"> IEEE </Button>
         <Button variant="light"> NSS </Button>
         <Button variant="light"> IEDC </Button>

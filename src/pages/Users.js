@@ -1,18 +1,15 @@
 import { Button } from "react-bootstrap";
 import React from "react";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import CardPack from "../components/CardPack";
+import { useNavigate, useParams } from "react-router-dom";
 import { Image } from "react-bootstrap";
 import banner from "../Assets/banner.png";
 import { useUserAuth } from "../components/Context";
-//import {useParams} from 'react-router-dom';
-const Users = () => {
-  // eslint-disable-next-line no-unused-vars
-  const { id } = useParams();
-  let navigate = useNavigate();
-  // let uId = localStorage.getItem("userId");
-  const { user, logOut } = useUserAuth();
 
+const Users = () => {
+  let navigate = useNavigate();
+  const { user, logOut } = useUserAuth();
+  const { id } = useParams();
   const handleLogOut = async () => {
     try {
       await logOut();
@@ -65,6 +62,8 @@ const Users = () => {
       <Button type="button" onClick={goToCreate}>
         Create
       </Button>
+
+      <CardPack filter={id} />
     </div>
   );
 };

@@ -4,7 +4,7 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import NoImage from "../Assets/no-image-icon-11.png";
 // eslint-disable-next-line no-unused-vars
-const CCard = ({ id, title, image, desc }) => {
+const CCard = ({ id, title, image }) => {
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(`/News/${id}`);

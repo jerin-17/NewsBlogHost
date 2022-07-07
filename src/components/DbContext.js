@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createContext, useContext, useState } from "react";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../firebaseConfig";
@@ -6,8 +6,16 @@ import { db } from "../firebaseConfig";
 const dbContext = createContext();
 
 export function DbContextProvider({ children }) {
-  const [postLists, setPostList] = useState([]);
+  const initialState = [];
+  const [postLists, setPostList] = useState(() => {
+    const persisted = localStorage.getItem("posts");
+    return persisted ? JSON.parse(persisted) : initialState;
+  });
   const postCollectionRef = collection(db, "posts");
+
+  useEffect(() => {
+    localStorage.setItem("posts", JSON.stringify(postLists));
+  }, [postLists]);
 
   const getPosts = async () => {
     const data = await getDocs(postCollectionRef);

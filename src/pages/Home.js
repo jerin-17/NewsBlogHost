@@ -4,8 +4,13 @@ import Bar from "../components/Bar";
 import CardPack from "../components/CardPack";
 import Image from "react-bootstrap/Image";
 import { useDbContext } from "../components/DbContext";
+import { useState } from "react";
 function Home() {
   const { getPosts } = useDbContext();
+  const [filter, setFilter] = useState("home");
+  const handleClick = (uid) => {
+    setFilter(uid);
+  };
   useEffect(() => {
     getPosts();
   }, []);
@@ -23,8 +28,8 @@ function Home() {
           style={{ overflow: "hidden" }}
         />
       </div>
-      <Bar />
-      <CardPack />
+      <Bar handleClick={handleClick} filter={filter} />
+      <CardPack filter={filter} />
     </div>
   );
 }

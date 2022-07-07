@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import { Button } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Form } from "react-bootstrap";
-import { addDoc, collection, setDoc } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { db, storage } from "../firebaseConfig";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
@@ -17,8 +17,9 @@ const Create = () => {
   const [isFirstMount, setIsFirstMount] = useState(true);
   const navigate = useNavigate();
   const { user } = useUserAuth();
+  const { id } = useParams();
   const goBack = () => {
-    navigate(`/Users/${user.uid}}`);
+    navigate(`/Users/${id}`);
   };
 
   const removeImage = () => {
@@ -69,8 +70,7 @@ const Create = () => {
   return (
     <div>
       <Button onClick={goBack} variant="primary" style={{ float: "left" }}>
-        {" "}
-        Back{" "}
+        Back
       </Button>
 
       <Form>
