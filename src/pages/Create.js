@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
-import { Button } from "react-bootstrap";
-import React, { useState, useEffect } from "react";
+import { Button, Container, Row, Col } from "react-bootstrap";
+import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import { addDoc, collection } from "firebase/firestore";
@@ -13,8 +12,6 @@ const Create = () => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [imagetoUpload, setImagetoUpload] = useState(null);
-  const [imageUrl, setImageUrl] = useState("");
-  const [isFirstMount, setIsFirstMount] = useState(true);
   const navigate = useNavigate();
   const { user } = useUserAuth();
   const { id } = useParams();
@@ -26,19 +23,6 @@ const Create = () => {
     setImagetoUpload(null);
   };
 
-  const uploadPost = async () => {
-    if (imagetoUpload == null) return;
-    const storageRef = ref(storage, `images/${imagetoUpload.name + v4()}`);
-    uploadBytes(storageRef, imagetoUpload).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then((url) => {
-        console.log(url);
-        console.log("image set");
-        setImageUrl(url);
-        removeImage();
-      });
-    });
-  };
-
   const updateTitle = (ev) => {
     setTitle(ev.target.value);
   };
@@ -47,19 +31,19 @@ const Create = () => {
     setDesc(ev.target.value);
   };
 
-  useEffect(() => {
-    if (isFirstMount) {
-      setIsFirstMount(false);
-    } else {
-      createPost();
-    }
-  }, [imageUrl]);
-
   const postCollectionRef = collection(db, "posts");
+
   const createPost = async () => {
+    let url = "";
+    if (imagetoUpload) {
+      const storageRef = ref(storage, `images/${imagetoUpload.name + v4()}`);
+      let snapshot = await uploadBytes(storageRef, imagetoUpload);
+      url = await getDownloadURL(snapshot.ref);
+    }
+    removeImage();
     await addDoc(postCollectionRef, {
       title,
-      imageUrl: imageUrl,
+      imageUrl: url,
       desc,
       author: user.uid,
     });
@@ -69,41 +53,87 @@ const Create = () => {
 
   return (
     <div>
-      <Button onClick={goBack} variant="primary" style={{ float: "left" }}>
-        Back
-      </Button>
-
-      <Form>
-        <Form.Group className="mb-3" controlId="Form.ControlInput1">
-          <Form.Control
-            type="text"
-            placeholder="Title"
-            value={title}
-            onChange={updateTitle}
-          />
-        </Form.Group>
-        <Form.Group controlId="formFile" className="mb-3">
-          <Form.Label>Default file input example</Form.Label>
-          <Form.Control
-            type="file"
-            onChange={(ev) => {
-              setImagetoUpload(ev.target.files[0]);
-            }}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="Form.ControlTextarea1">
-          <Form.Control
-            as="textarea"
-            rows={3}
-            onChange={updateDesc}
-            value={desc}
-          />
-        </Form.Group>
-      </Form>
-
-      <Button variant="primary" type="button" onClick={uploadPost}>
-        Submit
-      </Button>
+      <div className="mt-3  ml-2 p-1">
+        <Button onClick={goBack} variant="primary">
+          Back
+        </Button>
+      </div>
+      <Container
+        fluid
+        className="mx-auto "
+        style={{
+          minHeight: "80vh",
+          maxWidth: "45em",
+          border: "solid black 1px",
+          paddingLeft: "10px",
+          paddingRight: "10px",
+        }}
+      >
+        <Form className="w-100">
+          <Row>
+            <Col>
+              <Form.Group
+                controlId="height:5em"
+                className="px-3 mt-4"
+                style={{ height: "6em" }}
+              >
+                <Form.Control
+                  size="lg"
+                  className="mb-3 w-100 h-100"
+                  type="text"
+                  placeholder="Title"
+                  value={title}
+                  onChange={updateTitle}
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Group controlId="formFile" className="mb-3 px-3">
+                <Form.Label>Insert Image</Form.Label>
+                <Form.Control
+                  className="mb-3 w-auto"
+                  type="file"
+                  onChange={(ev) => {
+                    setImagetoUpload(ev.target.files[0]);
+                  }}
+                />
+                <small>*image should be less than 4MiB</small>
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row className="mb-2 pb-2">
+            <Col>
+              <Form.Group className="mb-3" controlId="Form.ControlTextarea1">
+                <Form.Control
+                  size="lg"
+                  className=" w-100"
+                  as="textarea"
+                  rows={10}
+                  style={{ overflow: "hidden" }}
+                  onChange={updateDesc}
+                  value={desc}
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+        </Form>
+        <Row className="mb-3">
+          <Col>
+            <Button
+              variant="primary"
+              type="button"
+              onClick={createPost}
+              style={{
+                float: "right",
+              }}
+            >
+              Submit
+            </Button>
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 };

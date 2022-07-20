@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Form, Alert } from "react-bootstrap";
+import { Form, Alert, Container } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { useUserAuth } from "../components/Context";
 
@@ -26,7 +26,15 @@ const Login = () => {
   }
 
   return (
-    <>
+    <Container
+      fluid
+      className="mx-auto border"
+      style={{
+        minWidth: "15em",
+        maxWidth: "30em",
+        marginTop: "10em",
+      }}
+    >
       <div className="p-4 box">
         <h2 className="mb-3">Admin Login</h2>
         {error && <Alert variant="danger">{error}</Alert>}
@@ -55,7 +63,7 @@ const Login = () => {
         </Form>
         <hr />
       </div>
-    </>
+    </Container>
   );
 };
 

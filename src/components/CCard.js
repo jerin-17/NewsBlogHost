@@ -3,11 +3,17 @@ import { useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import NoImage from "../Assets/no-image-icon-11.png";
-// eslint-disable-next-line no-unused-vars
-const CCard = ({ id, title, image }) => {
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "../firebaseConfig";
+
+const CCard = ({ id, title, image, userPage }) => {
+  const docref = doc(db, "posts/", id);
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(`/News/${id}`);
+  };
+  const handleDelete = async () => {
+    await deleteDoc(docref);
   };
   return (
     <Card>
@@ -16,14 +22,26 @@ const CCard = ({ id, title, image }) => {
         <Card.Title>{title}</Card.Title>
       </Card.Body>
       <Card.Footer>
-        <Button
-          variant="outline-primary"
-          size="sm"
-          style={{ float: "right" }}
-          onClick={handleClick}
-        >
-          read more
-        </Button>
+        {userPage && (
+          <Button
+            variant="danger"
+            style={{ float: "right" }}
+            size="sm"
+            onClick={handleDelete}
+          >
+            Delete
+          </Button>
+        )}
+        {!userPage && (
+          <Button
+            variant="outline-primary"
+            size="sm"
+            style={{ float: "right" }}
+            onClick={handleClick}
+          >
+            read more
+          </Button>
+        )}
       </Card.Footer>
     </Card>
   );

@@ -29,7 +29,7 @@ function Home() {
         />
       </div>
       <Bar handleClick={handleClick} filter={filter} />
-      <CardPack filter={filter} />
+      <CardPack filter={filter} userPage={false} />
     </div>
   );
 }

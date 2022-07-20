@@ -4,7 +4,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { useDbContext } from "./DbContext";
 
-const CardPack = ({ filter }) => {
+const CardPack = ({ filter, userPage }) => {
   const { postLists } = useDbContext();
   return (
     <>
@@ -22,6 +22,7 @@ const CardPack = ({ filter }) => {
                   title={post.title}
                   image={post.imageUrl}
                   desc={post.desc}
+                  userPage={userPage}
                 />
               </Col>
             );

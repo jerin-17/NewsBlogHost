@@ -1,8 +1,7 @@
-import { Button } from "react-bootstrap";
 import React from "react";
 import CardPack from "../components/CardPack";
 import { useNavigate, useParams } from "react-router-dom";
-import { Image } from "react-bootstrap";
+import { Image, Button } from "react-bootstrap";
 import banner from "../Assets/banner.png";
 import { useUserAuth } from "../components/Context";
 
@@ -28,24 +27,26 @@ const Users = () => {
 
   return (
     <div>
-      <div className="m-3">
+      <div className="m-3 p-2">
         <Button
           variant="primary"
           type="button"
-          style={{ float: "left" }}
+          style={{ position: "absolute", top: "10px", left: "10px" }}
           onClick={goToHome}
         >
           Home
         </Button>
+
         <Button
           variant="danger"
           type="button"
-          style={{ float: "right" }}
+          style={{ position: "absolute", top: "10px", right: "10px" }}
           onClick={handleLogOut}
         >
           Log out
         </Button>
       </div>
+
       <div
         className="d-flex justify-content-center mh-100"
         style={{ height: 180 }}
@@ -58,12 +59,26 @@ const Users = () => {
           style={{ overflow: "hidden" }}
         />
       </div>
-
-      <Button type="button" onClick={goToCreate}>
-        Create
-      </Button>
-
-      <CardPack filter={id} />
+      <CardPack filter={id} userPage={true} />
+      <div
+        style={{
+          position: "sticky",
+          bottom: "3em",
+          float: "right",
+          right: "5em",
+          border: "none",
+        }}
+      >
+        <Button
+          type="button"
+          variant="success"
+          onClick={goToCreate}
+          className="shadow shadow-10 border"
+          style={{ height: "4em", borderRadius: "3em", width: "7em" }}
+        >
+          <span style={{ fontSize: "25px", textAlign: "center" }}> Create</span>
+        </Button>
+      </div>
     </div>
   );
 };

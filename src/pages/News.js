@@ -15,14 +15,16 @@ const News = () => {
 
   return (
     <>
-      <Button
-        variant="primary"
-        className="mx-5"
-        onClick={() => navigate("/")}
-        style={{ float: "left" }}
-      >
-        Home
-      </Button>
+      <div className="my-3 ml-2">
+        <Button
+          variant="primary"
+          className="mx-5"
+          onClick={() => navigate("/")}
+        >
+          Home
+        </Button>
+      </div>
+
       <Container
         className=" my-5 p-4 w-75 shadow shadow-3"
         style={{ minHeight: "100vh" }}
