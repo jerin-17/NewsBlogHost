@@ -23,7 +23,7 @@ export function DbContextProvider({ children }) {
   };
 
   return (
-    <dbContext.Provider value={{ postLists, getPosts }}>
+    <dbContext.Provider value={{ postLists, getPosts, setPostList }}>
       {children}
     </dbContext.Provider>
   );
