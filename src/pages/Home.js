@@ -1,13 +1,19 @@
 import React, { useEffect } from "react";
 import banner from "../Assets/banner.png";
 import Bar from "../components/Bar";
+import Dropdwn from "../components/Dropdwn";
 import CardPack from "../components/CardPack";
 import Image from "react-bootstrap/Image";
 import { useDbContext } from "../components/DbContext";
 import { useState } from "react";
+import { useMediaQuery } from "react-responsive";
 function Home() {
   const { getPosts } = useDbContext();
   const [filter, setFilter] = useState("home");
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-width: 768px)",
+  });
+  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const handleClick = (uid) => {
     setFilter(uid);
   };
@@ -28,7 +34,8 @@ function Home() {
           style={{ overflow: "hidden" }}
         />
       </div>
-      <Bar handleClick={handleClick} filter={filter} />
+      {isDesktopOrLaptop && <Bar handleClick={handleClick} filter={filter} />}
+      {isMobile && <Dropdwn handleClick={handleClick} filter={filter} />}
       <CardPack filter={filter} userPage={false} />
     </div>
   );

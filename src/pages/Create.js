@@ -46,7 +46,7 @@ const Create = () => {
       imageUrl: url,
       desc,
       author: user.uid,
-      timestamp: new Date(),
+      timestamp: new Date().toISOString(),
     });
 
     navigate("/");

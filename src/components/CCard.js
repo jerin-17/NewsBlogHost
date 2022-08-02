@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import NoImage from "../Assets/no-image-icon-11.png";
+import Moment from "react-moment";
 
-const CCard = ({ id, title, image, userPage, handleDelete }) => {
+const CCard = ({ id, title, image, userPage, handleDelete, timestamp }) => {
   return (
     <Card>
       <Card.Img variant="top" src={image ? image : NoImage} alt="post" />
@@ -27,6 +28,13 @@ const CCard = ({ id, title, image, userPage, handleDelete }) => {
             {title}
           </Link>
         </Card.Title>
+        <Card.Text>
+          <small style={{ float: "right" }}>
+            <Moment interval={30000} fromNow>
+              {timestamp}
+            </Moment>
+          </small>
+        </Card.Text>
       </Card.Body>
       {userPage && (
         <Card.Footer>
