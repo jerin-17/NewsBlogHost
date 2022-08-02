@@ -21,6 +21,10 @@ const CardPack = ({ filter, userPage }) => {
     <>
       <Row xs={1} md={4} className="g-4 m-4 ">
         {postLists
+          .sort((x, y) => {
+            return x.timestamp - y.timestamp;
+          })
+          .reverse()
           .filter((post) => {
             if (filter === "home") return true;
             return post.author === filter;

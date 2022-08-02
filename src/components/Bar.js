@@ -22,11 +22,42 @@ const Bar = ({ handleClick, filter }) => {
         >
           College
         </Button>
-        <Button variant="light"> IEEE </Button>
-        <Button variant="light"> NSS </Button>
-        <Button variant="light"> IEDC </Button>
-        <Button variant="light"> Student Union</Button>
-        <Button variant="light">About Us</Button>
+        <Button
+          variant={
+            filter === "NLcqNTcLhpVFXXNioiXJMM10dSq2" ? "primary" : "light"
+          }
+          onClick={() => handleClick("NLcqNTcLhpVFXXNioiXJMM10dSq2")}
+        >
+          {" "}
+          IEEE{" "}
+        </Button>
+        <Button
+          variant={
+            filter === "apWNdPOC4GXHrQ4dzE7qBzWHvOo2" ? "primary" : "light"
+          }
+          onClick={() => handleClick("apWNdPOC4GXHrQ4dzE7qBzWHvOo2")}
+        >
+          {" "}
+          NSS{" "}
+        </Button>
+        <Button
+          variant={
+            filter === "DlE9407dAqYiUmPEa0myFeh9Bdh1" ? "primary" : "light"
+          }
+          onClick={() => handleClick("DlE9407dAqYiUmPEa0myFeh9Bdh1")}
+        >
+          {" "}
+          IEDC{" "}
+        </Button>
+        <Button
+          variant={
+            filter == "7YNcGcpm9WUXzsnicgm9uQtak7o1" ? "primary" : "light"
+          }
+          onClick={() => handleClick("7YNcGcpm9WUXzsnicgm9uQtak7o1")}
+        >
+          {" "}
+          Student Union
+        </Button>
         {!user && <Nav.Link href="/Login">Login</Nav.Link>}
         {user && <Nav.Link href={`/Users/${user.uid}`}>My Account</Nav.Link>}
       </Container>
