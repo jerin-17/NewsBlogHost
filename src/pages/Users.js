@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import CardPack from "../components/CardPack";
 import { useNavigate, useParams } from "react-router-dom";
-import { Image, Button } from "react-bootstrap";
+import { Image, Button, Modal } from "react-bootstrap";
 import banner from "../Assets/banner.png";
 import { useUserAuth } from "../components/Context";
+import createImg from "../Assets/create.png";
+import exitImg from "../Assets/box-arrow-left.svg";
+import homeImg from "../Assets/house.svg";
 
 const Users = () => {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   let navigate = useNavigate();
   const { user, logOut } = useUserAuth();
   const { id } = useParams();
@@ -29,23 +35,49 @@ const Users = () => {
     <div>
       <div className="m-3 p-2">
         <Button
-          variant="primary"
           type="button"
-          style={{ position: "absolute", top: "10px", left: "10px" }}
+          style={{
+            position: "absolute",
+            top: "10px",
+            right: "5em",
+            background: "none",
+            border: "none",
+          }}
           onClick={goToHome}
         >
-          Home
+          <Image src={homeImg} style={{ height: "2.5em", width: "2.5em" }} />
         </Button>
 
         <Button
-          variant="danger"
           type="button"
-          style={{ position: "absolute", top: "10px", right: "10px" }}
-          onClick={handleLogOut}
+          style={{
+            position: "absolute",
+            top: "10px",
+            right: "10px",
+            background: "none",
+            border: "none",
+          }}
+          onClick={handleShow}
         >
-          Log out
+          <Image
+            src={exitImg}
+            fluid
+            style={{ height: "2.5em", width: "2.5em" }}
+          />
         </Button>
       </div>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Body>Do you want to Logout?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={handleLogOut}>
+            Logout
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
       <div
         className="d-flex justify-content-center mh-100"
@@ -71,12 +103,17 @@ const Users = () => {
       >
         <Button
           type="button"
-          variant="success"
           onClick={goToCreate}
-          className="shadow shadow-10 border"
-          style={{ height: "4em", borderRadius: "3em", width: "7em" }}
+          style={{
+            background: "none",
+            border: "none",
+          }}
         >
-          <span style={{ fontSize: "25px", textAlign: "center" }}> Create</span>
+          <Image
+            fluid
+            src={createImg}
+            style={{ height: "4em", width: "4em" }}
+          />
         </Button>
       </div>
     </div>

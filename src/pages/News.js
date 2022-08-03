@@ -3,12 +3,12 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useDbContext } from "../components/DbContext";
 import { Container, Image, Row, Col, Button } from "react-bootstrap";
 import NoImage from "../Assets/no-image-icon-11.png";
+import homeImg from "../Assets/house.svg";
 
 const News = () => {
   const { postLists } = useDbContext();
   const navigate = useNavigate();
   const { docid } = useParams();
-  //console.log(postLists);
   const postDet = postLists.find((card) => {
     return card.id === docid;
   });
@@ -17,11 +17,11 @@ const News = () => {
     <>
       <div className="my-3 ml-2">
         <Button
-          variant="primary"
           className="mx-5"
           onClick={() => navigate("/")}
+          style={{ background: "none", border: "none" }}
         >
-          Home
+          <Image src={homeImg} style={{ height: "2.5em", width: "2.5em" }} />
         </Button>
       </div>
 
