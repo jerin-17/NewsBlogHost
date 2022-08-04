@@ -21,7 +21,7 @@ function Home() {
     getPosts();
   }, []);
   const idname = [
-    { name: "home", uid: "home" },
+    { name: "Home", uid: "home" },
     { name: "College", uid: "tUy3IedmJfYQnCBjQNLC60yWDl53" },
     { name: "IEEE", uid: "NLcqNTcLhpVFXXNioiXJMM10dSq2" },
     { name: "NSS", uid: "apWNdPOC4GXHrQ4dzE7qBzWHvOo2" },
